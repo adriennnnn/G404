@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native';
-import menuNavabar from './components/menuNavbar.js';
+// import MenuNavbar from './components/MenuNavbar.js';
+
 
 
 
 export default function App() {
+
+  const [isOpen, setisOpen] = useState(false);
+  
   return (
       <View style={styles.container}>
         
@@ -18,12 +23,29 @@ export default function App() {
               <Text style={{color: 'white'}}>contact</Text>
             </TouchableOpacity> 
             {/* <path xmlns="http://www.w3.org/2000/svg" d="M1,9h14V7H1V9z M1,14h14v-2H1V14z M1,2v2h14V2H1z"/> */}
-            <TouchableOpacity style={styles.btnh} onPress={() => {alert('ceci est un menu, normalement')}}>
-                <menuNavabar />
-            </TouchableOpacity> 
+            {/* <TouchableOpacity style={styles.btnh} onPress={() => {alert('ceci est un menu, normalement')}}> */}
+                {/* <MenuNavbar /> */}
+            {/* </TouchableOpacity>  */}
+            <TouchableOpacity style={styles.btnBurger} onPress={() => setisOpen(!isOpen) }>
+              <Text style={styles.Burger} >&#9776; </Text>
 
+            </TouchableOpacity> 
         </View>
         <View style={styles.body}>
+ 
+              <View style={ State(isOpen) }>
+                <View style={styles.BurgerBody}>
+                  <TouchableOpacity style={styles.btnBurgerDown} onPress={() => {alert('et non')}}>
+                    <Text style={styles.BurgerDownText} >Acceuil </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.btnBurgerDown} onPress={() => {alert('et non')}}>
+                    <Text style={styles.BurgerDownText} >Nos offres </Text>
+                  </TouchableOpacity> 
+                  <TouchableOpacity style={styles.btnBurgerDown} onPress={() => {alert('et non')}}>
+                    <Text style={styles.BurgerDownText} >A propos </Text>
+                  </TouchableOpacity>  
+                </View>
+              </View>
           <ImageBackground source={imageBgBody} resizeMode="cover" style={styles.imageBody}>
             <Text style={styles.textBodyTitle}>
               ÉCOLE DU NUMÉRIQUE POUR ADULTES, ADOS ET ENFANTS
@@ -35,7 +57,6 @@ export default function App() {
       </View>
   );
 }
-
 const imageBgBody = { uri: "https://www.garage404.com/wp-content/uploads/2022/03/pack-algora-commerciales-10-scaled.jpg" };
 
 const styles = StyleSheet.create({
@@ -63,7 +84,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     flexDirection:'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
   body : {
     
@@ -98,27 +119,48 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // justifyContent: 'center',
     // alignItems: 'center',
+  }, btnBurger:{
+    marginRight: 15,
+    
+  },
+  Burger: {
+    color : '#6D3C98',
+    fontSize: 40
+  },
+  BurgerOn: {
+    // width: 0,
+    // height: 0,
+    display: 'flex'
+  },
+  BurgerUp: {
+    // width: 0,
+    // height: 0,
+    display: 'none'
+  },
+  BurgerBody:{
+    borderTopColor : '#61C6BE',
+    borderTopWidth: 3,
+    backgroundColor : 'white',
+    
+  },
+  btnBurgerDown: {
+    marginLeft: 10,
+    borderTopColor : '#61C6BE',
+    
+    borderLeftWidth: 2,
+    borderColor : '#61C6BE',
+    
+  },
+  BurgerDownText: {
+    marginLeft: 10,
+    margin: 5,
   }
 });
 
-
-
-
-// smsSendFunction(); {
-
-//   SendSMS.send({
-//       body: 'Please follow us on https://reactnativecode.com',
-//       recipients: ['0987654321'],
-//       successTypes: ['sent', 'queued']
-//   }, (completed, cancelled, error) => {
-//       if(completed){
-//         Alert.alert('SMS Sent Successfully.')
-//       }else if(cancelled){
-//         console.log('SMS Sent Cancelled.');
-//       }else if(error){
-//         console.log('Some error occured.');
-//       }
-//   });
-// }
-
-
+function State(value) {
+  if (value === true) {
+    return styles.BurgerOn;
+  }else{
+    return styles.BurgerUp;
+  }
+};
